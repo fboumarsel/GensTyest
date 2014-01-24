@@ -30,15 +30,15 @@
 					<h1> <span class="sign-up">S'inscrire</span></h1>
 					
 					<p class="float">
-						<label>Nom</label>
-						<input type="text" name="nom" placeholder="nom">
+						<label>Login</label>
+						<input type="text" name="user" placeholder="Login">
 					</p>
 				
 				
 				
 					<p class="float">
-						<label>Prénom</label>
-						<input type="text" name="prenom" placeholder="prenom" >
+						<label>Mot de passe</label>
+						<input type="password" name="password" placeholder="password" >
 					</p>
 					
 					<p class="float">
@@ -48,34 +48,11 @@
 					
 				
 				    <p class="float">
-						<label>User</label>
-						<input type="text" name="user" placeholder="user">
-					</p>
-			     	
-				
-					
-					
-				    <p class="float">
-						<label for="password"><i class="icon-lock"></i>Mot de passe</label>
-						<input type="password" name="password" placeholder="Password" class="showpassword">
-					</p>
-				
-			
-				  
-				
-				   <p class="float">
-						<label>ville</label>
-						<input type="text" name="ville" placeholder="ville">
-					</p>
-					
-				   <p class="float">
 						<label>pays</label>
 						<input type="text" name="pays" placeholder="pays">
 					</p>
-					
-					
-					
-					
+			     	
+				
 					
 					<p class="clearfix">     
 						<input type="submit" name="submit" value="S'inscrire">

@@ -28,13 +28,14 @@
 <link rel="alternate" type="application/rss+xml" title="Bufa Webmaster &raquo; RSS de los comentarios" href="http://www.bufa.es/comments/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Bufa Webmaster &raquo; Google maps: obtener latitud &amp; longitud RSS de los comentarios" href="feed/index.html" />
 <link rel='shortlink' href='http://www.bufa.es/?p=1877' />
-    
+<script src="ajax.js" type="text/javascript"></script>   
 </head>
 
 <body class="page page-id-1877 page-template page-template-tpl_googlemaps-php">
 
 <header id="header">
 	<div class="infos">
+		<?php include ('trophe.php');?>
 	  <?php echo'Bonjour :'.$_SESSION['login'];?>
  	<br>
     	<?php 
@@ -46,26 +47,42 @@
     	<?php 
     		echo'Pays : '.$_SESSION['pays'];		
 		?>
+		
 		<div class="deco">
-		<a href="deco.php">Deconnexion</a>
+		<a href="deco.php">Deconnexion</a><br/>
+		<a href="modif.php">Modification</a>
+		</div>
+		 
 	</div>
-	</div>
 	
-	
-	
-
 </header>
 <style type="text/css">
 body {
 				background: #e1c192 url(images/3.jpg);
 			}
 .infos {
-	width : 250px;
+	width : 400px;
+	height: 150px;
 	border: solid 2px yellow;
 	font-size: 14px;
 	font-weight: bold;
+	padding : 10px;
 	color: white;
+	-webkit-border-bottom-right-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+  -webkit-border-top-left-radius: 8px;
+  -moz-border-radius-topright: 8px;
+  -moz-border-radius-topleft: 8px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  z-index: 1;
 }
+
 .deco {
 	width : 100px;
 	height: 20px;
@@ -77,6 +94,14 @@ body {
 .jeu {
 	
 	float: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: #e1c192;
+}
+
+.jeu1 {
+	
+	float: right;
 	font-size: 14px;
 	font-weight: bold;
 	color: #e1c192;
@@ -106,19 +131,25 @@ div#map .form{
   position: absolute;
   top: -54px;
   left: 50%;
-  width:980px;
+  width:990px;
   height:50px;
   margin:0 0 0 -490px;
   text-align: center;
   line-height: 50px;
   color: #e1c192 ;
   background: #FFFD8B;
-  -webkit-border-bottom-right-radius: 2px;
-  -webkit-border-bottom-left-radius: 2px;
-  -moz-border-radius-bottomright: 2px;
-  -moz-border-radius-bottomleft: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
+  -webkit-border-bottom-right-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+  -webkit-border-top-left-radius: 8px;
+  -moz-border-radius-topright: 8px;
+  -moz-border-radius-topleft: 8px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
   z-index: 1;
 }
 
@@ -227,6 +258,11 @@ div#crosshair {
     centerChanged();
   }
 
+
+
+
+  
+
   function setupEvents() {
     reverseGeocodedLast = new Date();
     centerChangedLast = new Date();
@@ -254,16 +290,23 @@ div#crosshair {
     return '(' + map.getCenter().lat() +', '+ map.getCenter().lng() +')';
   }
 
+  
+
   function centerChanged() {
     centerChangedLast = new Date();
     var latlng = getCenterLatLngText();
     var lat = map.getCenter().lat();
     var lng = map.getCenter().lng();
-    document.getElementById('lat').innerHTML = lat;
-    document.getElementById('lng').innerHTML = lng;
-    document.getElementById('formatedAddress').innerHTML = '';
+    document.getElementById('lat').value = lat;
+    document.getElementById('lng').value = lng;
+    document.getElementById('formatedAddress').value = '';
     currentReverseGeocodeResponse = null;
-  }
+    //ajax
+   
+     }
+
+
+  
 
   function reverseGeocode() {
     reverseGeocodedLast = new Date();
@@ -295,14 +338,23 @@ div#crosshair {
     }
   }
 
+  
+
   function geocode() {
-			
+		
     var address = document.getElementById("address").value;
     geocoder.geocode({
       'address': address,
-      'partialmatch': true}, geocodeResult);
-
+      'partialmatch': true}, geocodeResult
+      );
+    
+    
   }
+
+
+ 
+
+
 
   function geocodeResult(results, status) {
     if (status == 'OK' && results.length > 0) {
@@ -318,6 +370,7 @@ div#crosshair {
         map: map
     });
 
+    
     var text = 'Lat/Lng: ' + getCenterLatLngText();
     if(currentReverseGeocodeResponse) {
       var addr = '';
@@ -346,7 +399,7 @@ div#crosshair {
     </div>
     <div class="form">
 		    	<div class="jeu" id="jeu">
-				<form method="post" action="chercher.php">
+				<form method="post" action="chercher.php" id="jouer" name="jouer" onsubmit="return envoidata();">
 		       		<input type="text" name="gentile" id="gentile" placeholder="Nom des Habitants" class="input">
 		        	 OU
 		        	<select name="pro">
@@ -365,27 +418,30 @@ div#crosshair {
 		
 				?>
 				</select>
-		        <input type="submit" value="Jouer" name="submit" id="submit" class="button">
+		        
+  		  		<input id="lat"  type="text" name="lat" size="17px" disabled="disabled">
+      			<input id="lng"  type="text" name="lng" size="17px" disabled="disabled">
+		     
+		        
+		        <input type="submit" value="Jouer" name="submit" id="submit" class="button" >
+		        
 		        </form>
 			</div>
-       		<div>
+       	<div style="margin-top: -2px; float: left;">	
         <input type="checkbox" name="jeu" checked="checked" id="jeu" onClick="affiche('jeu')"  id="check"><label for="check"><strong>Jouer</strong></label></input>
         
-        <input type="text" id="address" placeholder="Le lieu à chercher .." value="" class="input"> 
-        <input type="button" value="Chercher" onclick="geocode()" class="button"> 
-        <input type="button" value="Marquer ce lieu" onclick="addMarkerAtCenter()" class="button">
-     
+        <input type="text"  id="address" placeholder="Le lieu à chercher .." value="" class="input"> 
         </div>
+        <div style="float: right;">
+        <input type="image" width="50px" height="50px" src="images/rech.png" value="Chercher" onclick="geocode()" class="button"> 
+        <input type="image" width="50px" height="50px" src="images/flechette.png" value="Marquer ce lieu" onclick="addMarkerAtCenter()" class="button">
+     	</div>
+        
        
       
     </div>
     
-   		 <div class="coordinates">
-      		<em class="lat">Latitude</em>
-      		<em class="lon">Longitude</em>
-     		<span id="lat"></span>
-      		<span id="lng"></span>
-  		  </div>
+		
     
     <div class="address">
       <span id="formatedAddress">-</span>

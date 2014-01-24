@@ -41,7 +41,12 @@ if($count==1){
 header("location:index.php");
 }
 else {
-header("location:error.php");
+	?>
+	<script>
+		alert('Mot de passe ou login incorrect');
+		window.location.href = 'index2.html';
+	</script>
+<?php 
 }
 ob_end_flush();
 

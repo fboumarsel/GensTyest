@@ -1,5 +1,4 @@
 <?php session_start(); 
-
 $user = $_SESSION['login'];
 
 if(isset($_POST['submit']) && $_POST['submit'] != NULL)
@@ -17,11 +16,12 @@ mysql_select_db("$db_name")or die("cannot select DB");
 //On nettoie un peut la requête
 $requete = htmlspecialchars(stripcslashes($_POST["gentile"]));
 $requete1 = $_POST["pro"];
+$lat=$_POST["lat"];
+$lng=$_POST["lng"];
 
-
-$query = mysql_query("SELECT * FROM gentilet WHERE gentile LIKE '%$requete%'") 
+$query = mysql_query("SELECT * FROM gentilet WHERE gentile LIKE '%$requete%' AND lat LIKE '%$lat%' AND lng LIKE '%$lng%'") 
 or die (mysql_error());
-$query1 = mysql_query("SELECT * FROM gentilet WHERE gentile LIKE '%$requete1%'") 
+$query1 = mysql_query("SELECT * FROM gentilet WHERE gentile LIKE '%$requete1%' AND lat LIKE '%$lat%' AND lng LIKE '%$lng%'") 
 or die (mysql_error()); 
  
 //On utilise la fonction mysql_num_rows pour compter les résultats
